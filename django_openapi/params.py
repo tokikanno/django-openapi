@@ -110,6 +110,17 @@ class Query(BaseRequestField):
         return request.GET.get(name)
 
 
+class Path(BaseRequestField):
+    IN_POS = 'path'
+
+    def __init__(self, field):
+        super(Path, self).__init__(field)
+        assert field.required, 'All path field must be required!'
+
+    def get_value_from_request(self, request, name):
+        return request.path_kwargs.get(name)
+
+
 class Header(BaseRequestField):
     IN_POS = 'header'
 
