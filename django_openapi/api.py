@@ -1,28 +1,31 @@
-# -*- coding:utf8 -*-
-from __future__ import unicode_literals
+# -*- coding:utf-8 -*-
+from __future__ import division
 from __future__ import print_function
+from __future__ import unicode_literals
 
 from collections import OrderedDict
-from pinkoi.base.openapi.schema.base import BaseModel
 
 import six
 
-from .route import Route
-
+from django.conf.urls import url
 from django.http import HttpResponse, Http404, HttpResponseNotAllowed
-from pinkoi.lib.json import json_response
+
+from .route import Route, PATH_NOT_FULL_FILLED
+from .schema import BaseModel
+
+from .utils import json_response
 
 DOC_PAGE_TPL = '''<!DOCTYPE html>
 <html>
 <head>
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@3/swagger-ui.css">
-    <link rel="shortcut icon" href="https://fastapi.tiangolo.com/img/favicon.png">
+    <link type='text/css' rel='stylesheet' href='https://cdn.jsdelivr.net/npm/swagger-ui-dist@3/swagger-ui.css'>
+    <link rel='shortcut icon' href='https://fastapi.tiangolo.com/img/favicon.png'>
     <title>Pinkoi Business Site - Swagger UI</title>
 </head>
 <body>
-    <div id="swagger-ui">
+    <div id='swagger-ui'>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@3/swagger-ui-bundle.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/swagger-ui-dist@3/swagger-ui-bundle.js'></script>
     <!-- `SwaggerUIBundle` is now available on the page -->
     <script>
     const ui = SwaggerUIBundle({{
@@ -33,7 +36,7 @@ DOC_PAGE_TPL = '''<!DOCTYPE html>
             SwaggerUIBundle.presets.apis,
             SwaggerUIBundle.SwaggerUIStandalonePreset
         ],
-        layout: "BaseLayout",
+        layout: 'BaseLayout',
         deepLinking: true
     }})
     </script>
@@ -46,12 +49,12 @@ REDOC_PAGE_TPL = '''
     <head>
         <title>Pinkoi Business Site - ReDoc</title>
         <!-- needed for adaptive design -->
-        <meta charset="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset='utf-8'/>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
 
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700" rel="stylesheet">
+        <link href='https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700' rel='stylesheet'>
 
-        <link rel="shortcut icon" href="https://fastapi.tiangolo.com/img/favicon.png">
+        <link rel='shortcut icon' href='https://fastapi.tiangolo.com/img/favicon.png'>
         <!--
         ReDoc doesn't change outer page styles
         -->
@@ -63,8 +66,8 @@ REDOC_PAGE_TPL = '''
         </style>
     </head>
     <body>
-    <redoc spec-url="{prefix_path}/_openapi.json"></redoc>
-    <script src="https://cdn.jsdelivr.net/npm/redoc@next/bundles/redoc.standalone.js"> </script>
+    <redoc spec-url='{prefix_path}/_openapi.json'></redoc>
+    <script src='https://cdn.jsdelivr.net/npm/redoc@next/bundles/redoc.standalone.js'> </script>
     </body>
 </html>'''
 
@@ -82,7 +85,12 @@ class OpenAPI(object):
         self.title = title
         self.description = description
         self.version = version
-        self.path_route_map = OrderedDict()
+        if prefix_path.startswith('/'):
+            prefix_path = prefix_path[1:]
+
+        self.route_path_set = set()
+        self.routes = []
+
         self.prefix_path = prefix_path
         self.server_info_d = {
             'url': server_url,
@@ -112,10 +120,10 @@ class OpenAPI(object):
             )
 
             assert (
-                route_path not in self.path_route_map
-            ), '{} already in path_route_map'.format(route_path)
+                route_path not in self.route_path_set
+            ), '{} already registered'.format(route_path)
 
-            self.path_route_map[route_path] = route
+            self.routes.append(route)
 
             return fn
 
@@ -172,42 +180,51 @@ class OpenAPI(object):
 
         api_d['paths'] = path_d = OrderedDict()
 
-        for route_path, route_obj in six.iteritems(self.path_route_map):
-            api_d['paths'][route_path] = route_obj.get_openapi_schema()
+        for route_obj in self.routes:
+            api_d['paths'][
+                '/'.join(self.prefix_path, route_obj.route_path)
+            ] = route_obj.get_openapi_schema()
 
-        api_d['components'] = {
-            'schemas': BaseModel.get_ref_name_to_schema_map()
-        }
+        api_d['components'] = {'schemas': BaseModel.get_ref_name_to_schema_map()}
 
         return api_d
 
+    def as_django_url_pattern(self):
+        return url(
+            '^{prefix_path}(?P<route_path>/.*)'.format(prefix_path=self.prefix_path),
+            self.as_django_view(),
+        )
+
     def as_django_view(self):
         def dispatcher(request, route_path):
-            route_path = (
-                route_path[:-1] if route_path.endswith('/') else route_path
-            )
+            route_path = route_path[:-1] if route_path.endswith('/') else route_path
 
             # document routes
             if route_path == '/_openapi.json':
                 return json_response(self.get_openapi_schema())
             elif route_path == '/_docs':
-                return HttpResponse(
-                    DOC_PAGE_TPL.format(prefix_path=self.prefix_path)
-                )
+                return HttpResponse(DOC_PAGE_TPL.format(prefix_path=self.prefix_path))
             elif route_path == '/_redoc':
-                return HttpResponse(
-                    REDOC_PAGE_TPL.format(prefix_path=self.prefix_path)
-                )
+                return HttpResponse(REDOC_PAGE_TPL.format(prefix_path=self.prefix_path))
 
             # find route handler from path_route_map
-            route = self.path_route_map.get(route_path)
-            if route:
-                if request.method not in route.allow_methods:
-                    return json_response({}, status_code=405)
+            matched_route_to_path_kwargs_map = OrderedDict()
 
-                # route.__call__
-                return route(request)
+            for route in self.routes:
+                path_kwargs = route.match_path(route_path)
+                if path_kwargs is PATH_NOT_FULL_FILLED:
+                    continue
+                matched_route_to_path_kwargs_map[route] = path_kwargs
 
-            return json_response({}, status_code=404)
+            # not route matched
+            if not matched_route_to_path_kwargs_map:
+                return json_response({}, status_code=404)
+
+            for route, path_kwargs in six.iteritems(matched_route_to_path_kwargs_map):
+                if request.method in route.allow_methods:
+                    request.path_kwargs = path_kwargs
+                    return route(request)
+            else:
+                return json_response({}, status_code=405)
 
         return dispatcher
