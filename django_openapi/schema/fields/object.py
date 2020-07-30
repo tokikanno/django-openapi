@@ -4,7 +4,6 @@ from __future__ import print_function
 from __future__ import absolute_import
 
 import sys
-from future.utils import raise_
 from collections import Mapping
 
 from .base import BaseSchemaElement
@@ -53,9 +52,7 @@ class ObjectField(BaseSchemaElement):
                 value_dict = value
             else:
                 value_dict = {
-                    k: getattr(value, k)
-                    for k in dir(value)
-                    if not k.startswith('_')
+                    k: getattr(value, k) for k in dir(value) if not k.startswith("_")
                 }
 
             try:
