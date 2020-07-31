@@ -16,6 +16,9 @@ from django_openapi.schema import (
     ArrayField,
 )
 
+'''
+A minimal working demo of Django App
+'''
 
 DEBUG = True
 SECRET_KEY = 'thisisagoooooooooooooooooooooooooooooodaytotie'
