@@ -122,7 +122,8 @@ class Route(object):
         if route_path.endswith('/'):
             route_path = route_path[:-1]
 
-        self.route_path = RoutePath(route_path)
+        self.route_path = route_path
+        self.path_parser = RoutePath(route_path)
         self.allow_methods = cfg.allow_methods
         self.summary = cfg.summary
         self.description = cfg.description
@@ -254,7 +255,7 @@ class Route(object):
         return json_d
 
     def match_path(self, request_path):
-        return self.route_path.parse(request_path)
+        return self.path_parser.parse(request_path)
 
     def prase_response(self, resp, http_status_code=200):
 
