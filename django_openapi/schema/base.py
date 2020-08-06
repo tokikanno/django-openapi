@@ -43,9 +43,7 @@ class BaseModel(object):
             return v.to_json_dict()
 
         elif isinstance(v, Mapping):
-            return {
-                _k: self.__to_json_value(_v) for _k, _v in six.iteritems(v)
-            }
+            return {_k: self.__to_json_value(_v) for _k, _v in six.iteritems(v)}
 
         elif is_iterable(v):
             return [self.__to_json_value(x) for x in v]
@@ -113,3 +111,18 @@ class BaseModel(object):
     @classmethod
     def get_ref_name_to_schema_map(cls):
         return copy(_ref_name_to_schema_map)
+
+    @classmethod
+    def parse(cls, value):
+        if isinstance(value, cls):
+            return value
+
+        elif isinstance(value, Mapping):
+            value_dict = value
+
+        else:
+            value_dict = {
+                k: getattr(value, k) for k in dir(value) if not k.startswith('_')
+            }
+
+        return cls(**value_dict)

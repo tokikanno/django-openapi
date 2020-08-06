@@ -47,19 +47,11 @@ class ObjectField(BaseSchemaElement):
         if value is None and not self.required:
             return value
 
-        if not isinstance(value, self.model_cls):
-            if isinstance(value, Mapping):
-                value_dict = value
-            else:
-                value_dict = {
-                    k: getattr(value, k) for k in dir(value) if not k.startswith("_")
-                }
-
-            try:
-                self.model_cls(**value_dict)
-            except SchemaValidationError as e:
-                e.position = position + e.position
-                raise e
+        try:
+            value = self.model_cls.parse(value)
+        except SchemaValidationError as e:
+            e.position = position + e.position
+            raise e
 
         return value
 
