@@ -8,6 +8,7 @@ from collections import OrderedDict
 import six
 
 from django.conf.urls import url
+from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, Http404, HttpResponseNotAllowed
 
 from .route import Route, PATH_NOT_FULL_FILLED
@@ -171,17 +172,22 @@ class OpenAPI(object):
                 'description': self.description,
                 'version': self.version,
             },
-            'servers': [self.server_info_d],
         }
+
+        if self.server_info_d['url']:
+            api_d['servers'] = [self.server_info_d]
 
         api_d['paths'] = path_d = OrderedDict()
 
         for route_obj in self.routes:
-            api_d['paths'][
-                '/{prefix_path}{route_path}'.format(
-                    prefix_path=self.prefix_path, route_path=route_obj.route_path
-                )
-            ] = route_obj.get_openapi_schema()
+            route_path = '/{prefix_path}{route_path}'.format(
+                prefix_path=self.prefix_path, route_path=route_obj.route_path
+            )
+
+            if route_path not in api_d['paths']:
+                api_d['paths'][route_path] = OrderedDict()
+
+            api_d['paths'][route_path].update(route_obj.get_openapi_schema())
 
         api_d['components'] = {'schemas': BaseModel.get_ref_name_to_schema_map()}
 
@@ -194,6 +200,7 @@ class OpenAPI(object):
         )
 
     def as_django_view(self):
+        @csrf_exempt
         def dispatcher(request, route_path):
             route_path = route_path[:-1] if route_path.endswith('/') else route_path
 
