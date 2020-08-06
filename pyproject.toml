@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "django_openapi"
+version = "0.1.0"
+description = "A minimal FastAPI implementation in python2 + Django without pydantic"
+authors = ["toki.kanno <toki.kanno@gmail.com>"]
+license = "MIT License"
+
+[tool.poetry.dependencies]
+python = "^2.7"
+django = "^1.8"
+
+[tool.poetry.dev-dependencies]
+
+[tool.black]
+skip-string-normalization = true
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
+
