@@ -2,6 +2,11 @@
 from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
+
+from collections import OrderedDict
+
+import six
+
 from django_openapi.schema.fields.string import StringField
 
 from django.conf.urls import url
@@ -34,14 +39,39 @@ api = OpenAPI(
 )
 
 
+USER_STORE = OrderedDict()
+
+UID_FIELD = NumberField(gt=0, multiple_of=1)
+
+
+class CreateUserModel(BaseModel):
+    first_name = StringField(min_length=5, max_length=50)
+    last_name = StringField(min_length=5, max_length=50)
+
+
+class UserModel(CreateUserModel):
+    uid = UID_FIELD
+
+
 @api.get('/users')
 def get_users():
-    return {'user': []}
+    return {'user': list(six.itervalues(USER_STORE))}
 
 
 @api.get('/users/{uid}')
-def get_user_by_uid(uid=Path(NumberField(gt=0, multiple_of=1))):
-    return {'uid': uid}
+def get_user_by_uid(uid=Path(UID_FIELD)):
+    return {'user': USER_STORE.get(uid)}
+
+
+@api.post('/users')
+def create_user(payload=Body(CreateUserModel)):
+    uid = 1 if not USER_STORE else (max(six.iterkeys(USER_STORE)) + 1)
+    user = UserModel(
+        uid=uid, first_name=payload.first_name, last_name=payload.last_name
+    )
+    USER_STORE[uid] = user
+
+    return user
 
 
 urlpatterns = [url(r'^$', home), api.as_django_url_pattern()]
