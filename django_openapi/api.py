@@ -29,7 +29,7 @@ DOC_PAGE_TPL = '''<!DOCTYPE html>
     <!-- `SwaggerUIBundle` is now available on the page -->
     <script>
     const ui = SwaggerUIBundle({{
-        url: '{prefix_path}/_openapi.json',
+        url: '/{prefix_path}/_openapi.json',
         oauth2RedirectUrl: window.location.origin + '/docs/oauth2-redirect',
         dom_id: '#swagger-ui',
         presets: [
@@ -66,7 +66,7 @@ REDOC_PAGE_TPL = '''
         </style>
     </head>
     <body>
-    <redoc spec-url='{prefix_path}/_openapi.json'></redoc>
+    <redoc spec-url='/{prefix_path}/_openapi.json'></redoc>
     <script src='https://cdn.jsdelivr.net/npm/redoc@next/bundles/redoc.standalone.js'> </script>
     </body>
 </html>'''
@@ -85,13 +85,9 @@ class OpenAPI(object):
         self.title = title
         self.description = description
         self.version = version
-        if prefix_path.startswith('/'):
-            prefix_path = prefix_path[1:]
-
         self.route_path_set = set()
         self.routes = []
-
-        self.prefix_path = prefix_path
+        self.prefix_path = prefix_path.strip('/')
         self.server_info_d = {
             'url': server_url,
             'description': server_description,
@@ -182,7 +178,9 @@ class OpenAPI(object):
 
         for route_obj in self.routes:
             api_d['paths'][
-                '/'.join(self.prefix_path, route_obj.route_path)
+                '/{prefix_path}{route_path}'.format(
+                    prefix_path=self.prefix_path, route_path=route_obj.route_path
+                )
             ] = route_obj.get_openapi_schema()
 
         api_d['components'] = {'schemas': BaseModel.get_ref_name_to_schema_map()}
