@@ -8,7 +8,7 @@ demo:
 	django-admin runserver --pythonpath=. --settings=demo.app 9527
 
 upload:
-	twine upload dist/*
+	twine upload -u __token__ dist/*
 
 upload-test:
-	twine upload --repository testpypi dist/*
+	twine upload -u __token__ --repository testpypi dist/*
