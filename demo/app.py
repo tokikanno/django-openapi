@@ -53,17 +53,17 @@ class UserModel(CreateUserModel):
     uid = UID_FIELD
 
 
-@api.get('/users')
+@api.get('/users', tags=['users'])
 def get_users():
     return {'user': list(six.itervalues(USER_STORE))}
 
 
-@api.get('/users/{uid}')
+@api.get('/users/{uid}', tags=['users'])
 def get_user_by_uid(uid=Path(UID_FIELD)):
     return {'user': USER_STORE.get(uid)}
 
 
-@api.post('/users')
+@api.post('/users', tags=['users'])
 def create_user(payload=Body(CreateUserModel)):
     uid = 1 if not USER_STORE else (max(six.iterkeys(USER_STORE)) + 1)
     user = UserModel(
