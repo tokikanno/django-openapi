@@ -21,10 +21,25 @@ People who like the way FastAPI works but
 # Installation
 
 ```
-# To be describe
+pip install django-openapi
 ``` 
 
 # How to use
 
+### In your Django project
+
+* import `OpenAPI` from `django_opeanapi`
+* Create an API object instance
+* Add API object into urlpatterns
+
 ```python
+# import OpenAPI from django_opeanapi
+from django_openapi import OpenAPI
+
+# create an API object instance
+api = OpenAPI(title='My OpenAPI Test',	prefix_path='/api')
+
+urlpatterns = [
+	api.as_django_url_pattern()  # Add API object into urlpatterns
+]
 ```
