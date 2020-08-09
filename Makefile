@@ -1,5 +1,7 @@
-.PHONY: build demo upload-test
+.PHONY: clean build demo upload-test
 
+clean:
+	rm -rf build dist
 
 build:
 	python setup.py sdist bdist_wheel
