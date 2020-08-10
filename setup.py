@@ -9,17 +9,17 @@ with open('README.md') as f:
     long_description = f.read()
 
 setuptools.setup(
-    name='openapi-router',
-    version='0.1',
+    name='django-openapi',
+    version='0.1.1',
     author='toki kanno',
     author_email='toki.kanno@gmail.com',
-    description='A minimal FastAPI implementation in python2 + Django/Flask without pydantic',
+    description='A minimal FastAPI implementation in python2 + Django without pydantic',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://github.com/tokikanno/openapi-router',
+    url='https://github.com/tokikanno/django-openapi',
     packages=setuptools.find_packages(),
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 1 - Planning',
         'Environment :: Web Environment',
         'Framework :: Django',
         'License :: OSI Approved :: MIT License',

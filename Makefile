@@ -6,8 +6,8 @@ clean:
 build:
 	python setup.py sdist bdist_wheel
 
-demo-django:
-	django-admin runserver --pythonpath=. --settings=demo.django_app 9527
+demo:
+	django-admin runserver --pythonpath=. --settings=demo.app 9527
 
 upload:
 	twine upload -u __token__ dist/*
