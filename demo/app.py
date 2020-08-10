@@ -10,8 +10,8 @@ import six
 from django.conf.urls import url
 from django.http import HttpResponse
 
-from django_openapi import OpenAPI, Path, Body, Query, Form, UploadFile
-from django_openapi.schema import (
+from openapi_router import OpenAPI, Path, Body, Query, Form, UploadFile
+from openapi_router.schema import (
     BaseModel,
     StringField,
     NumberField,
