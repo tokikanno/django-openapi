@@ -9,7 +9,7 @@ But FastAPI needs Python3 to run, some legacy projects I maintained are still us
 So I decided to build a minimal FastAPI implementation in Python2 + Django, that I could instantly get the benefits from FastAPI without too many migrations on my legacy projects.
 
 # Who should use this?
-People who like the way FastAPI works but 
+People who like the way FastAPI works but
 * Are still on the long migration process from Python2 to Python3
 * Or dont want to do full system rewrite from Django to FastAPI
 * Or dont want to upgrade from Python2 to Python3
@@ -22,13 +22,13 @@ People who like the way FastAPI works but
 
 ```
 pip install django-openapi
-``` 
+```
 
-# How to use
+# Quick start
 
 ### In your Django project
 
-* import `OpenAPI` from `django_opeanapi`
+* Import `OpenAPI` from `django_opeanapi`
 * Create an API object instance
 * Add API object into urlpatterns
 
@@ -43,3 +43,38 @@ urlpatterns = [
 	api.as_django_url_pattern()  # Add API object into urlpatterns
 ]
 ```
+
+* Now let's try adding some basic routes for you API
+
+```python
+from django_openapi import Path, Query, Form
+
+@api.get('/test/hello_via_path/{word}', tags=['test'])
+def hello_via_path(word=Path()):
+    return {'hello': word}
+
+
+@api.get('/test/hello_via_query', tags=['test'])
+def hello_via_query(word=Query()):
+    return {'hello': word}
+
+
+@api.post('/test/hello_via_form', tags=['test'])
+def hello_via_form(word=Form()):
+    return {'hello': word}
+```
+
+* Advanced routes via JSON body & JSON schema object
+
+```python
+from django_openapi import Body
+from django_openapi.schemas import BaseModel, StringField
+
+class HelloPayload(BaseModel):
+    word = StringField(default_value)
+
+@api.post('/test/hello_via_json_body', tags=['test'])
+def hello_via_json_body(payload=Body()):
+    return {'hello': payload.word}
+```
+
