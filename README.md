@@ -37,13 +37,14 @@ pip install django-openapi
 from django_openapi import OpenAPI
 
 # create an API object instance
-api = OpenAPI(title='My OpenAPI Test',	prefix_path='/api')
+api = OpenAPI(title='My OpenAPI Test',	prefix_path='/test_api')
 
 urlpatterns = [
 	api.as_django_url_pattern()  # Add API object into urlpatterns
 ]
 ```
 
+* Start you django debug server and open your browser with url like `http://localhost:8000/test_api/_docs`
 * Now let's try adding some basic routes for you API
 
 ```python
