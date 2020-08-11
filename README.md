@@ -74,7 +74,7 @@ class HelloPayload(BaseModel):
     word = StringField(default_value)
 
 @api.post('/test/hello_via_json_body', tags=['test'])
-def hello_via_json_body(payload=Body()):
+def hello_via_json_body(payload=Body(HelloPayload)):
     return {'hello': payload.word}
 ```
 
