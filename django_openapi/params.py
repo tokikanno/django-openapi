@@ -37,8 +37,10 @@ class BaseRequestParam(six.with_metaclass(ABCMeta, object)):
 
 
 class BaseRequestField(BaseRequestParam):
-    def __init__(self, field):
+    def __init__(self, field=None):
         super(BaseRequestField, self).__init__()
+        field = field or StringField()
+
         assert isinstance(field, BaseSchemaElement)
         self.field = field
 
