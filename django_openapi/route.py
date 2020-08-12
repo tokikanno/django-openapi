@@ -153,6 +153,7 @@ class Route(object):
         self.arg_name_to_request_param_map = OrderedDict()
         self.pass_request = False
         self.pass_session = False
+        self.pass_cookie_jar = False
         self._body_form_cls = None
 
         arg_spec = getargspec(fn)
