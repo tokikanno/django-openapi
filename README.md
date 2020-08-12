@@ -15,8 +15,8 @@ People who like the way FastAPI works but
 * Or dont want to upgrade from Python2 to Python3
 
 # Tell me what is working
-* Auto OpenAPI document generation
-* Auto Schema Validation
+* Auto OpenAPI document generation from Python function parameter
+* Auto Schema Validation from Python function parameters
 
 # Installation
 
