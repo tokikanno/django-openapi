@@ -67,7 +67,7 @@ def simple_get_request_with_query_args(arg1=Query(), arg2=Query()):
 ```python
 from django_openapi import Query
 
-@api.get('/simple_get_request_with_path_args')
+@api.get('/simple_get_request_with_query_args')
 def simple_get_request_with_query_args(arg1=Query(), arg2=Query()):
     return dict(arg1=arg1, arg2=arg2)
 ```
