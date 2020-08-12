@@ -17,7 +17,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/tokikanno/django-openapi',
-    packages=setuptools.find_packages(),
+    packages=['django_openapi',],
     classifiers=[
         'Development Status :: 1 - Planning',
         'Environment :: Web Environment',
