@@ -15,8 +15,8 @@ People who like the way FastAPI works but
 * Or dont want to upgrade from Python2 to Python3
 
 # Tell me what is working
-* Auto OpenAPI document generation
-* Auto Schema Validation
+* Auto OpenAPI document generation from Python function parameter
+* Auto Schema Validation from Python function parameters
 
 # Installation
 
@@ -28,7 +28,7 @@ pip install django-openapi
 
 ### In your Django project
 
-* Import `OpenAPI` from `django_opeanapi`
+* Import `OpenAPI` from `django_openapi`
 * Create an API object instance
 * Add API object into urlpatterns
 
