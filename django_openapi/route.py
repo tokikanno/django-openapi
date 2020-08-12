@@ -112,6 +112,8 @@ class Route(object):
         response_model=None,
         response_model_map=None,
     ):
+        description = description or fn.__doc__
+
         cfg = RouteConfig(
             route_path=route_path,
             allow_methods=allow_methods,
