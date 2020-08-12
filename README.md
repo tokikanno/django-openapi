@@ -72,7 +72,7 @@ from django_openapi import Body
 from django_openapi.schema import BaseModel, StringField
 
 class HelloPayload(BaseModel):
-    word = StringField(default_value)
+    word = StringField(default_value='world', min_length=3)
 
 @api.post('/test/hello_via_json_body', tags=['test'])
 def hello_via_json_body(payload=Body(HelloPayload)):
