@@ -44,7 +44,7 @@ urlpatterns = [
 ]
 ```
 
-* Start you django debug server and open your browser with url like `http://localhost:8000/test_api/_docs`
+* Start you django debug server and open your browser with url like `http://localhost:8000/test_api/_docs`, this is the auto document page.
 * Now let's try adding some basic routes for you API
 
 ```python
@@ -64,7 +64,7 @@ def hello_via_query(word=Query()):
 def hello_via_form(word=Form()):
     return {'hello': word}
 ```
-
+* Reload your browser & see if anything changed to the auto document page
 * Advanced routes via JSON body & JSON schema object
 
 ```python
@@ -79,3 +79,8 @@ def hello_via_json_body(payload=Body(HelloPayload)):
     return {'hello': payload.word}
 ```
 
+* Reload agagin, the auto document page now should have 4 APIs on it.
+
+![image](https://github.com/tokikanno/django-openapi/blob/master/docs/images/hello_app.png)
+
+Browse to the [demo folder](https://github.com/tokikanno/django-openapi/tree/master/demo) for more advanced samples.
