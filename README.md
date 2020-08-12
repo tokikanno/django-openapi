@@ -28,7 +28,7 @@ pip install django-openapi
 
 ### In your Django project
 
-* Import `OpenAPI` from `django_opeanapi`
+* Import `OpenAPI` from `django_openapi`
 * Create an API object instance
 * Add API object into urlpatterns
 
