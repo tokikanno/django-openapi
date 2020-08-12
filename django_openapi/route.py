@@ -12,6 +12,7 @@ from django.http import HttpResponse
 
 from .utils import json_response
 from .params import BaseRequestParam
+from .cookie import CookieJar
 from .schema import (
     BaseModel,
     StringField,
@@ -85,7 +86,7 @@ class RoutePath(object):
             key_set.add(key)
             re_segs.append('{prefix}(?P<{key}>[^/]+)'.format(prefix=prefix, key=key))
 
-        print('regex: ' + ''.join(re_segs))
+        # print('regex: ' + ''.join(re_segs))
         self.regex = re.compile('^' + ''.join(re_segs) + '$')
 
     def parse(self, request_path):
@@ -159,13 +160,16 @@ class Route(object):
                 name = arg_spec.args[i]
                 vidx = i - arg_default_len_diff
                 value = arg_spec.defaults[vidx] if vidx >= 0 else None
-                print(name, value)
+                # print(name, value)
 
                 if name == 'request':
                     self.pass_request = True
 
                 elif name == 'session':
                     self.pass_session = True
+
+                elif name == 'cookie_jar':
+                    self.pass_cookie_jar = True
 
                 elif isinstance(value, BaseRequestParam):
                     assert (
@@ -289,6 +293,9 @@ class Route(object):
         if self.pass_session:
             kwargs['session'] = request.session
 
+        if self.pass_cookie_jar:
+            kwargs['cookie_jar'] = CookieJar()
+
         validation_errors = []
         for k, field in six.iteritems(self.arg_name_to_request_param_map):
             try:
@@ -312,8 +319,12 @@ class Route(object):
             )
 
         resp = self.fn(**kwargs)
+        resp = self.prase_response(resp)
 
-        return self.prase_response(resp)
+        if self.pass_cookie_jar:
+            kwargs['cookie_jar'].apply_to_response(resp)
+
+        return resp
 
     def __repr__(self):
         return 'Route("{}")'.format(self.route_path)
