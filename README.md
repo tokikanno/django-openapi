@@ -69,7 +69,7 @@ def hello_via_form(word=Form()):
 
 ```python
 from django_openapi import Body
-from django_openapi.schemas import BaseModel, StringField
+from django_openapi.schema import BaseModel, StringField
 
 class HelloPayload(BaseModel):
     word = StringField(default_value)
