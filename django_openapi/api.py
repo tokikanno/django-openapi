@@ -20,8 +20,7 @@ DOC_PAGE_TPL = '''<!DOCTYPE html>
 <html>
 <head>
     <link type='text/css' rel='stylesheet' href='https://cdn.jsdelivr.net/npm/swagger-ui-dist@3/swagger-ui.css'>
-    <link rel='shortcut icon' href='https://fastapi.tiangolo.com/img/favicon.png'>
-    <title>Pinkoi Business Site - Swagger UI</title>
+    <title>{title} - Swagger UI</title>
 </head>
 <body>
     <div id='swagger-ui'>
@@ -48,14 +47,13 @@ REDOC_PAGE_TPL = '''
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Pinkoi Business Site - ReDoc</title>
+        <title>{title} - ReDoc</title>
         <!-- needed for adaptive design -->
         <meta charset='utf-8'/>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
 
         <link href='https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700' rel='stylesheet'>
 
-        <link rel='shortcut icon' href='https://fastapi.tiangolo.com/img/favicon.png'>
         <!--
         ReDoc doesn't change outer page styles
         -->
@@ -208,9 +206,15 @@ class OpenAPI(object):
             if route_path == '/_openapi.json':
                 return json_response(self.get_openapi_schema())
             elif route_path == '/_docs':
-                return HttpResponse(DOC_PAGE_TPL.format(prefix_path=self.prefix_path))
+                return HttpResponse(
+                    DOC_PAGE_TPL.format(title=self.title, prefix_path=self.prefix_path)
+                )
             elif route_path == '/_redoc':
-                return HttpResponse(REDOC_PAGE_TPL.format(prefix_path=self.prefix_path))
+                return HttpResponse(
+                    REDOC_PAGE_TPL.format(
+                        title=self.title, prefix_path=self.prefix_path
+                    )
+                )
 
             # find route handler from path_route_map
             matched_route_to_path_kwargs_map = OrderedDict()
