@@ -9,6 +9,9 @@ build:
 demo:
 	django-admin runserver --pythonpath=. --settings=demo.app 9527
 
+intro:
+	django-admin runserver --pythonpath=. --settings=demo.intro 9527
+
 upload-prod:
 	twine upload -u __token__ dist/*
 
