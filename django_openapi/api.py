@@ -223,13 +223,13 @@ class OpenAPI(object):
 
             # not route matched
             if not matched_route_to_path_kwargs_map:
-                return json_response({}, status_code=404)
+                return json_response({'404': 'Not Found'}, status_code=404)
 
             for route, path_kwargs in six.iteritems(matched_route_to_path_kwargs_map):
                 if request.method in route.allow_methods:
                     request.path_kwargs = path_kwargs
                     return route(request)
             else:
-                return json_response({}, status_code=405)
+                return json_response({'405': 'Method not Allowed'}, status_code=405)
 
         return dispatcher
