@@ -82,6 +82,7 @@ RAPIDOC_PAGE_TPL = '''
   <rapi-doc
     spec-url="/{prefix_path}/_openapi.json"
     sort-endpoints-by="method"
+    render-style="read"
   > </rapi-doc>
 </body>
 </html>
