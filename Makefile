@@ -1,7 +1,7 @@
 .PHONY: clean build demo upload-test
 
 clean:
-	rm -rf build dist
+	rm -rf build dist django_openapi.egg-info
 
 build:
 	python setup.py sdist bdist_wheel
