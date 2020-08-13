@@ -51,30 +51,20 @@ class NumberField(BaseSchemaElement):
         if not isinstance(value, (int, float)):
             try:
                 f_value = float(value)
-                if f_value.is_integer():
-                    value = int(value)
+                value = int(value) if f_value.is_integer() else f_value
             except:
                 raise SchemaValidationError(
-                    value,
-                    'TYPE_MISMATCH',
-                    constraint='number',
-                    position=position,
+                    value, 'TYPE_MISMATCH', constraint='number', position=position,
                 )
 
         if self.enums and value not in self.enum_set:
             raise SchemaValidationError(
-                value,
-                'VALUE_NOT_IN_ENUM',
-                constraint=self.enums,
-                position=position,
+                value, 'VALUE_NOT_IN_ENUM', constraint=self.enums, position=position,
             )
 
         if self.gt is not None and not value > self.gt:
             raise SchemaValidationError(
-                value,
-                'VALUE_MUST_GREATER_THAN',
-                constraint=self.gt,
-                position=position,
+                value, 'VALUE_MUST_GREATER_THAN', constraint=self.gt, position=position,
             )
 
         if self.gte is not None and not value >= self.gte:
@@ -87,10 +77,7 @@ class NumberField(BaseSchemaElement):
 
         if self.lt is not None and not value < self.lt:
             raise SchemaValidationError(
-                value,
-                'VALUE_MUST_LESSER_THAN',
-                constraint=self.lt,
-                position=position,
+                value, 'VALUE_MUST_LESSER_THAN', constraint=self.lt, position=position,
             )
 
         if self.lte is not None and not value <= self.lte:
