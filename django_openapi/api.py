@@ -70,6 +70,23 @@ REDOC_PAGE_TPL = '''
     </body>
 </html>'''
 
+RAPIDOC_PAGE_TPL = '''
+<!doctype html> <!-- Important: must specify -->
+<html>
+<head>
+  <title>{title} - RapiDoc</title>
+  <meta charset="utf-8"> <!-- Important: rapi-doc uses utf8 charecters -->
+  <script type="module" src="https://unpkg.com/rapidoc/dist/rapidoc-min.js"></script>
+</head>
+<body>
+  <rapi-doc
+    spec-url="/{prefix_path}/_openapi.json"
+    sort-endpoints-by="method"
+  > </rapi-doc>
+</body>
+</html>
+'''
+
 
 class OpenAPI(object):
     def __init__(
@@ -212,6 +229,12 @@ class OpenAPI(object):
             elif route_path == '/_redoc':
                 return HttpResponse(
                     REDOC_PAGE_TPL.format(
+                        title=self.title, prefix_path=self.prefix_path
+                    )
+                )
+	    elif route_path == '/_rapidoc':
+                return HttpResponse(
+                    RAPIDOC_PAGE_TPL.format(
                         title=self.title, prefix_path=self.prefix_path
                     )
                 )
