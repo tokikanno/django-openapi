@@ -58,7 +58,7 @@ def get_request_with_path_args(arg1=Path(), arg2=Path()):
 
 
 @api.get(
-    '/get_request_with_path_args',
+    '/get_request_with_query_args',
     tags=['1. Basic HTTP requests'],
     summary='A simple http GET request which parse query string as arguments',
 )
@@ -76,11 +76,11 @@ def get_request_with_query_args(arg1=Query(), arg2=Query()):
 
 
 @api.get(
-    '/get_request_with_formatted_query_args',
+    '/get_request_with_json_schema_query_args',
     tags=['1. Basic HTTP requests'],
     summary='A simple http GET request which parse query string by special format rules',
 )
-def get_request_with_formatted_query_args(
+def get_request_with_json_schema_query_args(
     arg1=Query(StringField(min_length=3, max_length=10)),
     arg2=Query(NumberField(gte=0, lte=10)),
 ):
@@ -89,8 +89,8 @@ def get_request_with_formatted_query_args(
 from django_openapi import Query
 from django_openapi.schema import StringField, NumberField
 
-@api.get('/get_request_with_formatted_query_args')
-def get_request_with_formatted_query_args(
+@api.get('/get_request_with_json_schema_query_args')
+def get_request_with_json_schema_query_args(
     arg1=Query(StringField(min_length=3, max_length=10)),
     arg2=Query(NumberField(gte=0, lte=10))
 ):
