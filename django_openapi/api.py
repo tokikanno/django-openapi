@@ -233,7 +233,7 @@ class OpenAPI(object):
                         title=self.title, prefix_path=self.prefix_path
                     )
                 )
-	    elif route_path == '/_rapidoc':
+            elif route_path == '/_rapidoc':
                 return HttpResponse(
                     RAPIDOC_PAGE_TPL.format(
                         title=self.title, prefix_path=self.prefix_path
