@@ -40,7 +40,7 @@ from django_openapi import OpenAPI
 api = OpenAPI(title='My OpenAPI Test',	prefix_path='/test_api')
 
 urlpatterns = [
-	api.as_django_url_pattern()  # Add API object into urlpatterns
+    api.as_django_url_pattern()  # Add API object into urlpatterns
 ]
 ```
 
