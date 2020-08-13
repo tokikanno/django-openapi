@@ -3,6 +3,7 @@ from django_openapi.schema import (
     BaseModel,
     StringField,
     NumberField,
+    BooleanField,
     ObjectField,
     ArrayField,
 )
@@ -30,7 +31,8 @@ class IntroResponse1(BaseModel):
 
 class IntroResponse2(BaseModel):
     arg1 = StringField(min_length=3, max_length=10)
-    arg2 = NumberField(gte=0, lte=10)
+    arg2 = NumberField(gte=0, lte=10, multiple_of=1)
+    arg3 = BooleanField(default_value=False)
 
 
 @api.get(
@@ -121,14 +123,25 @@ Query strings are something after the `?` mark of your url.
 @api.get(
     '/get_request_with_json_schema_query_args',
     tags=['1. Basic HTTP requests'],
-    summary='A simple http GET request which parse query string by special format rules',
+    summary='Auto parameter validation via JSON schema fields',
     response_model=IntroResponse2,
 )
 def get_request_with_json_schema_query_args(
     arg1=Query(StringField(min_length=3, max_length=10)),
-    arg2=Query(NumberField(gte=0, lte=10)),
+    arg2=Query(NumberField(gte=0, lte=10, multiple_of=1)),
+    arg3=Query(BooleanField(default_value=False)),
 ):
     '''
+Currently, we have 5 basic JSON schema fields
+
+* StringField
+* NumberField
+* BooleanField
+* ObjectField
+* ArrayField
+
+Below we'll first demo how to use StringField, NumberField & BooleanField
+
 ```python
 from django_openapi import Query
 from django_openapi.schema import StringField, NumberField
@@ -136,9 +149,10 @@ from django_openapi.schema import StringField, NumberField
 @api.get('/get_request_with_json_schema_query_args')
 def get_request_with_json_schema_query_args(
     arg1=Query(StringField(min_length=3, max_length=10)),
-    arg2=Query(NumberField(gte=0, lte=10))
+    arg2=Query(NumberField(gte=0, lte=10, multiple_of=1)),
+    arg3=Query(BooleanField(default_value=False)),
 ):
     return dict(arg1=arg1, arg2=arg2)
 ```
     '''
-    return dict(arg1=arg1, arg2=arg2)
+    return dict(arg1=arg1, arg2=arg2, arg3=arg3)
