@@ -85,3 +85,7 @@ def hello_via_json_body(payload=Body(HelloPayload)):
 ![image](https://github.com/tokikanno/django-openapi/blob/master/docs/images/hello_app.png)
 
 Browse to the [demo folder](https://github.com/tokikanno/django-openapi/tree/master/demo) for more advanced samples.
+
+
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/tokikanno/django-openapi)
+
