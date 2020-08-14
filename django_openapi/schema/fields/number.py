@@ -52,7 +52,7 @@ class NumberField(BaseSchemaElement):
             try:
                 f_value = float(value)
                 value = int(value) if f_value.is_integer() else f_value
-            except:
+            except (TypeError, ValueError):
                 raise SchemaValidationError(
                     value, 'TYPE_MISMATCH', constraint='number', position=position,
                 )
