@@ -14,9 +14,10 @@ People who like the way FastAPI works but
 * Or dont want to do full system rewrite from Django to FastAPI
 * Or dont want to upgrade from Python2 to Python3
 
-# Tell me what is working
-* Auto OpenAPI document generation from Python function parameter
-* Auto Schema Validation from Python function parameters
+# Features
+* Auto OpenAPI schema/document generation from Python function parameter
+* Auto HTTP request parameter validation from Python function parameters
+* Python 2/3 compatiable, you could use almost the same code for you Python2/3 projects
 
 # Installation
 
