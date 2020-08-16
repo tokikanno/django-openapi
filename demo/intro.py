@@ -153,7 +153,7 @@ Below we'll first demo how to use StringField, NumberField & BooleanField
 
 ```python
 from django_openapi import Query
-from django_openapi.schema import StringField, NumberField
+from django_openapi.schema import StringField, NumberField, BooleanField
 
 @api.get('/get_request_with_json_schema_query_args')
 def get_request_with_json_schema_query_args(
@@ -161,7 +161,37 @@ def get_request_with_json_schema_query_args(
     arg2=Query(NumberField(gte=0, lte=10, multiple_of=1)),
     arg3=Query(BooleanField(default_value=False)),
 ):
-    return dict(arg1=arg1, arg2=arg2)
+    return dict(arg1=arg1, arg2=arg2, arg3=arg3)
+```
+    '''
+    return dict(arg1=arg1, arg2=arg2, arg3=arg3)
+
+
+@api.post(
+    '/post_request_with_json_schema_form_args',
+    tags=['1. Basic HTTP requests'],
+    summary='Define Form parameters',
+    response_model=IntroResponse2,
+)
+def post_request_with_json_schema_form_args(
+    arg1=Form(StringField(min_length=3, max_length=10)),
+    arg2=Form(NumberField(gte=0, lte=10, multiple_of=1)),
+    arg3=Form(BooleanField(default_value=False)),
+):
+    '''
+Now we use the same JSON schema field definitions, but in Form() format.
+
+```python
+from django_openapi import Form
+from django_openapi.schema import StringField, NumberField, BooleanField
+
+@api.post('/post_request_with_json_schema_form_args')
+def post_request_with_json_schema_form_args(
+    arg1=Form(StringField(min_length=3, max_length=10)),
+    arg2=Form(NumberField(gte=0, lte=10, multiple_of=1)),
+    arg3=Form(BooleanField(default_value=False)),
+):
+    return dict(arg1=arg1, arg2=arg2, arg3=arg3)
 ```
     '''
     return dict(arg1=arg1, arg2=arg2, arg3=arg3)
