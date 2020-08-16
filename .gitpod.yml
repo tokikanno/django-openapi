@@ -1,6 +1,6 @@
 ports:
-- port: 8080
-  onOpen: open-preview
+- port: 8000
+  onOpen: open-browser
 
 tasks:
   - init: pip install django six 
