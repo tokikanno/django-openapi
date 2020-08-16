@@ -1,3 +1,5 @@
+from django.http import HttpResponseRedirect
+from django.conf.urls import url
 from django_openapi import OpenAPI, Path, Body, Query, Form, UploadFile
 from django_openapi.schema import (
     BaseModel,
@@ -17,11 +19,18 @@ SECRET_KEY = 'canukeepasecret'
 ROOT_URLCONF = __name__
 
 
+def redirect_to_doc(request):
+    return HttpResponseRedirect('/intro/_rapidoc')
+
+
 api = OpenAPI(
     title='OpenAPI Test', version='0.1', description='Just a Test', prefix_path='/intro'
 )
 
-urlpatterns = [api.as_django_url_pattern()]
+urlpatterns = [
+    url(r'^$', redirect_to_doc),
+    api.as_django_url_pattern()
+]
 
 
 class IntroResponse1(BaseModel):
