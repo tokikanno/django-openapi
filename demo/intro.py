@@ -46,7 +46,7 @@ class IntroResponse2(BaseModel):
 
 @api.get(
     '/get_request',
-    tags=['1. Basic HTTP requests'],
+    tags=['1. Setup your first OpenAPI endpoint'],
     summary='Get start & create a simple http GET route',
 )
 def get_request():
