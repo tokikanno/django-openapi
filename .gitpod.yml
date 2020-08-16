@@ -3,6 +3,6 @@ ports:
   onOpen: open-preview
 
 tasks:
-  - init: poetry install
+  - init: pip install django six 
   - command: make intro
 
