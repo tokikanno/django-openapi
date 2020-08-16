@@ -4,5 +4,5 @@ ports:
 
 tasks:
   - init: pip install django six 
-  - command: make intro
+    command: make intro
 
