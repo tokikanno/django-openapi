@@ -184,7 +184,7 @@ def post_request_with_json_schema_form_args(
 Now we use the same JSON schema field definitions, but in Form() format.
 
 ```python
-from django_openapi import Form, UploadFile
+from django_openapi import Form
 from django_openapi.schema import StringField, NumberField, BooleanField
 
 @api.post('/post_request_with_json_schema_form_args')
@@ -239,3 +239,41 @@ def post_request_file_upload(
             'md5': md5(upload_file.read()).hexdigest(),
         },
     }
+
+class SamplePayload(BaseModel):
+    arg1 = StringField(min_length=3, max_length=10)
+    arg2 = NumberField(gte=0, lte=10, multiple_of=1)
+    arg3 = BooleanField(default_value=False)
+
+
+@api.post(
+    '/post_request_with_json_schema_body',
+    tags=['1. Basic HTTP requests'],
+    summary='Define body parameters via JSON schema model',
+    response_model=SamplePayload,
+)
+def post_request_with_json_schema_body(
+    payload=Body(SamplePayload)
+):
+    '''
+The JSON schema fields could also be used for describing JSON body format, 
+all you need is declearing a class inherit from BaseModel class.
+
+```python
+from django_openapi import Body
+from django_openapi.schema import BaseModel, StringField, NumberField, BooleanField
+
+class SamplePayload(BaseModel):
+    arg1 = StringField(min_length=3, max_length=10)
+    arg2 = NumberField(gte=0, lte=10, multiple_of=1)
+    arg3 = BooleanField(default_value=False)
+
+
+@api.post('/post_request_with_json_schema_body')
+def post_request_with_json_schema_body(
+    payload=Body(SamplePayload)
+):
+    return payload
+```
+    '''
+    return payload
