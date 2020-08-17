@@ -1,3 +1,5 @@
+from hashlib import md5
+
 from django.http import HttpResponseRedirect
 from django.conf.urls import url
 from django_openapi import OpenAPI, Path, Body, Query, Form, UploadFile
@@ -182,7 +184,7 @@ def post_request_with_json_schema_form_args(
 Now we use the same JSON schema field definitions, but in Form() format.
 
 ```python
-from django_openapi import Form
+from django_openapi import Form, UploadFile
 from django_openapi.schema import StringField, NumberField, BooleanField
 
 @api.post('/post_request_with_json_schema_form_args')
@@ -195,3 +197,45 @@ def post_request_with_json_schema_form_args(
 ```
     '''
     return dict(arg1=arg1, arg2=arg2, arg3=arg3)
+
+
+@api.post(
+    '/post_request_file_upload',
+    tags=['1. Basic HTTP requests'],
+    summary='Define File Upload',
+)
+def post_request_file_upload(
+    upload_file = UploadFile(),
+    md5_hash = Form(StringField(required=False, description='md5 of uploaded file'))
+):
+    '''
+Now let's try building an endpoint for user file upload.
+
+```python
+from hashlib import md5
+from django_openapi import UploadFile, Form
+from django_openapi.schema import StringField, NumberField, BooleanField
+
+@api.post('/post_request_file_upload')
+def post_request_file_upload(
+    upload_file = UploadFile(),
+    md5_hash = Form(StringField(required=False, description='md5 of uploaded file'))
+):
+    return {
+        'submitted_md5': md5_hash,
+        'file': {
+            'name': upload_file.name,
+            'size': upload_file.size,
+            'md5': md5(upload_file.read()).hexdigest,
+        },
+    }
+```
+    '''
+    return {
+        'submitted_md5': md5_hash,
+        'file': {
+            'name': upload_file.name,
+            'size': upload_file.size,
+            'md5': md5(upload_file.read()).hexdigest(),
+        },
+    }
