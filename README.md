@@ -35,7 +35,7 @@ If the button doesn't show up, you clould also use below link directly
 
 [https://gitpod.io/#https://github.com/tokikanno/django-openapi](https://gitpod.io/#https://github.com/tokikanno/django-openapi)
 
-After Gitpod lunched, if you see a dialog like this, just hit the `Open Browser` button then you will get to the quick intro live demo server.
+After Gitpod launched, if you see a dialog like this, just hit the `Open Browser` button then you will get to the quick intro live demo server.
 
 ![image](https://github.com/tokikanno/django-openapi/blob/master/docs/images/gitpod-dialog.png)
 
