@@ -31,6 +31,9 @@ Click the button below and launch a free live demo server via Gitpod
 
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/tokikanno/django-openapi)
 
+If the button doesn't show up, you clould also use below link directly
+
+[https://gitpod.io/#https://github.com/tokikanno/django-openapi](https://gitpod.io/#https://github.com/tokikanno/django-openapi)
 
 # Quick start
 
