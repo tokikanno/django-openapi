@@ -25,6 +25,13 @@ People who like the way FastAPI works but
 pip install django-openapi
 ```
 
+# Live demo provided by Gitpod
+
+Click the button below and launch a free live demo server via Gitpod
+
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/tokikanno/django-openapi)
+
+
 # Quick start
 
 ### In your Django project
@@ -85,7 +92,3 @@ def hello_via_json_body(payload=Body(HelloPayload)):
 ![image](https://github.com/tokikanno/django-openapi/blob/master/docs/images/hello_app.png)
 
 Browse to the [demo folder](https://github.com/tokikanno/django-openapi/tree/master/demo) for more advanced samples.
-
-
-[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/tokikanno/django-openapi)
-
