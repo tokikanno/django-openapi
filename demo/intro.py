@@ -245,19 +245,22 @@ class SamplePayload(BaseModel):
     arg2 = NumberField(gte=0, lte=10, multiple_of=1)
     arg3 = BooleanField(default_value=False)
 
+class SampleResponse(BaseModel):
+    obj = ObjectField(SamplePayload)
+    ary = ArrayField(ObjectField(SamplePayload))
 
 @api.post(
     '/post_request_with_json_schema_body',
     tags=['1. Basic HTTP requests'],
     summary='Define body parameters via JSON schema model',
-    response_model=SamplePayload,
+    response_model=SampleResponse,
 )
 def post_request_with_json_schema_body(
     payload=Body(SamplePayload)
 ):
     '''
 The JSON schema fields could also be used for describing JSON body format, 
-all you need is declearing a class inherit from BaseModel class.
+all you need is declearing a class inherited from BaseModel class.
 
 ```python
 from django_openapi import Body
@@ -268,12 +271,22 @@ class SamplePayload(BaseModel):
     arg2 = NumberField(gte=0, lte=10, multiple_of=1)
     arg3 = BooleanField(default_value=False)
 
+class SampleResponse(BaseModel):
+    obj = ObjectField(SamplePayload)  # Object (dict in JSON) type field
+    ary = ArrayField(ObjectField(SamplePayload))  # Array type field
 
-@api.post('/post_request_with_json_schema_body')
+
+@api.post(
+    '/post_request_with_json_schema_body', 
+    response_model=SampleResponse,  # you can also put json schema model here for declearing response model 
+)
 def post_request_with_json_schema_body(
-    payload=Body(SamplePayload)
+    payload=Body(SamplePayload),
 ):
     return payload
 ```
     '''
-    return payload
+    return {
+        'obj': payload,
+        'ary': [payload, payload]
+    }
