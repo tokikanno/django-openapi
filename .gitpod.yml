@@ -1,0 +1,8 @@
+ports:
+- port: 8000
+  onOpen: open-browser
+
+tasks:
+  - init: pip install django six 
+    command: make intro
+

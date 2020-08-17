@@ -25,6 +25,20 @@ People who like the way FastAPI works but
 pip install django-openapi
 ```
 
+# Live demo provided by Gitpod
+
+Click the button below and launch a free live demo server via Gitpod
+
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/tokikanno/django-openapi)
+
+If the button doesn't show up, you clould also use below link directly
+
+[https://gitpod.io/#https://github.com/tokikanno/django-openapi](https://gitpod.io/#https://github.com/tokikanno/django-openapi)
+
+After Gitpod lunched, if you see a dialog like this, just hit the `Open Browser` button then you will get to the quick intro live demo server.
+
+![image](https://github.com/tokikanno/django-openapi/blob/master/docs/images/gitpod-dialog.png)
+
 # Quick start
 
 ### In your Django project
