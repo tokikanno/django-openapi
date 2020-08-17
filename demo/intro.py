@@ -20,7 +20,7 @@ ROOT_URLCONF = __name__
 
 
 def redirect_to_doc(request):
-    return HttpResponseRedirect('/intro/_rapidoc')
+    return HttpResponseRedirect('/intro/_rapidoc#tag--1.-Setup-your-first-OpenAPI-endpoint')
 
 
 api = OpenAPI(
