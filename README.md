@@ -37,7 +37,9 @@ If the button doesn't show up, you clould also use below link directly
 
 After Gitpod launched, if you see a dialog like this, just hit the `Open Browser` button then you will get to the quick intro live demo server.
 
-![image](https://github.com/tokikanno/django-openapi/blob/master/docs/images/gitpod-dialog.png)
+![image](https://github.com/tokikanno/django-openapi/blob/master/docs/images/gitpod-dialog.png) 
+
+Use ctrl + p (or cmd + p if u're using MacOS X) and search for `intro.py` to see the source code of intro demo server.
 
 # Quick start
 
