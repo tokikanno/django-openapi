@@ -11,8 +11,8 @@ So I decided to build a minimal FastAPI implementation in Python2 + Django, that
 # Who should use this?
 People who like the way FastAPI works but
 * Are still on the long migration process from Python2 to Python3
-* Or dont want to do full system rewrite from Django to FastAPI
-* Or dont want to upgrade from Python2 to Python3
+* Or don't want to do full system rewrite from Django to FastAPI
+* Or don't want to upgrade from Python2 to Python3
 
 # Features
 * Auto OpenAPI schema/document generation from Python function parameter
