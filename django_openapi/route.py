@@ -71,7 +71,7 @@ class RoutePath(object):
         # route_path = route_path[1:]
         self.route_path = route_path[:-1] if route_path.endswith('/') else route_path
 
-        key_set = set()
+        self.key_set = set()
         re_segs = []
         fmt = Formatter()
         for prefix, key, fmt_spec, conversion in fmt.parse(self.route_path):
@@ -82,8 +82,8 @@ class RoutePath(object):
             assert key and not fmt_spec and not conversion, (
                 'fail parsing parameter from path: ' + self.route_path
             )
-            assert key not in key_set, 'duplicated key {}'.format(key)
-            key_set.add(key)
+            assert key not in self.key_set, 'duplicated key {}'.format(key)
+            self.key_set.add(key)
             re_segs.append('{prefix}(?P<{key}>[^/]+)'.format(prefix=prefix, key=key))
 
         # print('regex: ' + ''.join(re_segs))
@@ -183,6 +183,13 @@ class Route(object):
 
                 else:
                     raise ValueError('unmapped parameter {}'.format(name))
+
+        if self.path_parser.key_set:
+            for k in self.path_parser.key_set:
+                assert (
+                    k in self.arg_name_to_request_param_map
+                    and self.arg_name_to_request_param_map[k].IN_POS == 'path'
+                ), 'umapped path arg key {}'.format(k)
 
         assert (
             self.arg_type_counter['body'] <= 1
