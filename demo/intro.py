@@ -1,3 +1,4 @@
+from os import path
 from django_openapi import OpenAPI, Path, Body, Query, Form, UploadFile
 from django_openapi.schema import (
     BaseModel,
@@ -15,6 +16,13 @@ A minimal working demo of Django App
 DEBUG = True
 SECRET_KEY = 'canukeepasecret'
 ROOT_URLCONF = __name__
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': path.join(path.dirname(__file__), 'db.sqlite3'),
+    }
+}
 
 
 api = OpenAPI(
