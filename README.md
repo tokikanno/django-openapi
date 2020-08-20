@@ -11,8 +11,8 @@ So I decided to build a minimal FastAPI implementation in Python2 + Django, that
 # Who should use this?
 People who like the way FastAPI works but
 * Are still on the long migration process from Python2 to Python3
-* Or dont want to do full system rewrite from Django to FastAPI
-* Or dont want to upgrade from Python2 to Python3
+* Or don't want to do full system rewrite from Django to FastAPI
+* Or don't want to upgrade from Python2 to Python3
 
 # Features
 * Auto OpenAPI schema/document generation from Python function parameter
@@ -24,6 +24,22 @@ People who like the way FastAPI works but
 ```
 pip install django-openapi
 ```
+
+# Live demo provided by Gitpod
+
+Click the button below and launch a free live demo server via Gitpod
+
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/tokikanno/django-openapi)
+
+If the button doesn't show up, you clould also use below link directly
+
+[https://gitpod.io/#https://github.com/tokikanno/django-openapi](https://gitpod.io/#https://github.com/tokikanno/django-openapi)
+
+After Gitpod launched, if you see a dialog like this, just hit the `Open Browser` button then you will get to the quick intro live demo server.
+
+![image](https://github.com/tokikanno/django-openapi/blob/master/docs/images/gitpod-dialog.png) 
+
+Use ctrl + p (or cmd + p if u're using MacOS X) and search for `intro.py` to see the source code of intro demo server.
 
 # Quick start
 
