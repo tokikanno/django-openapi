@@ -10,14 +10,16 @@ with open('README.md') as f:
 
 setuptools.setup(
     name='django-openapi',
-    version='0.1.1.8',
+    version='0.1.1.9',
     author='toki kanno',
     author_email='toki.kanno@gmail.com',
     description='A minimal FastAPI implementation in python2 + Django without pydantic',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/tokikanno/django-openapi',
-    packages=['django_openapi',],
+    packages=setuptools.find_packages(
+        '.', include=('django_openapi', 'django_openapi.*',)
+    ),
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Environment :: Web Environment',
