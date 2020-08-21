@@ -157,12 +157,15 @@ class Route(object):
         self._body_form_cls = None
 
         arg_spec = getargspec(fn)
-        if arg_spec.args and arg_spec.defaults:
-            arg_default_len_diff = len(arg_spec.args) - len(arg_spec.defaults)
+        if arg_spec.args:
+            arg_default_len_diff = len(arg_spec.args) - (
+                len(arg_spec.defaults) if arg_spec.defaults else 0
+            )
             for i in range(len(arg_spec.args)):
                 name = arg_spec.args[i]
                 vidx = i - arg_default_len_diff
                 value = arg_spec.defaults[vidx] if vidx >= 0 else None
+
                 # print(name, value)
 
                 if name == 'request':
@@ -301,7 +304,7 @@ class Route(object):
             kwargs['request'] = request
 
         if self.pass_session:
-            kwargs['session'] = request.session
+            kwargs['session'] = getattr(request, 'session', None)
 
         if self.pass_cookie_jar:
             kwargs['cookie_jar'] = CookieJar()
