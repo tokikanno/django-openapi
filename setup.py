@@ -10,7 +10,7 @@ with open('README.md') as f:
 
 setuptools.setup(
     name='django-openapi',
-    version='0.1.1.6',
+    version='0.1.1.7',
     author='toki kanno',
     author_email='toki.kanno@gmail.com',
     description='A minimal FastAPI implementation in python2 + Django without pydantic',
@@ -19,13 +19,13 @@ setuptools.setup(
     url='https://github.com/tokikanno/django-openapi',
     packages=['django_openapi',],
     classifiers=[
-        'Development Status :: 1 - Planning',
+        'Development Status :: 3 - Alpha',
         'Environment :: Web Environment',
         'Framework :: Django',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2.7',
-        # 'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3',
         'Operating System :: OS Independent',
     ],
     python_requires='>=2.7',
