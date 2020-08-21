@@ -101,3 +101,9 @@ def hello_via_json_body(payload=Body(HelloPayload)):
 ![image](https://github.com/tokikanno/django-openapi/blob/master/docs/images/hello_app.png)
 
 Browse to the [demo folder](https://github.com/tokikanno/django-openapi/tree/master/demo) for more advanced samples.
+
+# TODO
+
+* More documents and samples
+* Better schema validation error message handling
+* More advanced field types (e.g.: EmailStringField, CommaSeparatedArrayField ...)
