@@ -1,9 +1,11 @@
+from django_openapi.params import Cookie
 from os import path
 from hashlib import md5
+from datetime import datetime
 
 from django.http import HttpResponseRedirect
 from django.conf.urls import url
-from django_openapi import OpenAPI, Path, Body, Query, Form, UploadFile
+from django_openapi import OpenAPI, Path, Body, Query, Form, UploadFile, Cookie, Header
 from django_openapi.schema import (
     BaseModel,
     StringField,
@@ -295,4 +297,88 @@ def post_request_with_json_schema_body(
 ```
     '''
     return {'obj': payload, 'ary': [payload, payload]}
+
+
+@api.post(
+    '/some_special_variables_by_name',
+    tags=['1. Basic HTTP requests'],
+    summary='Some special variables',
+)
+def some_special_variables_by_name(request, session, cookie_jar):
+    '''
+You could access some special variables via your function parameter name.
+
+* `request`
+
+  * the django `HttpRequest` object
+
+* `session`
+
+  * the session object binded on request
+
+* `cookie_jar`
+
+  * if you want to set/del cookies on the response object, you must use cookie_jar
+  * cookie_jar is a proxy object to real HttpResponse object. The `set_cookie()`, `delete_cookie()` functions on it have the same signatures of HttpResonse.
+
+```python
+@api.get(
+    '/some_special_variables_by_name',
+)
+def some_special_variables_by_name(request, session, cookie_jar):
+
+    # this has the same signature as django HTTPResponse.set_cookie() function
+    cookie_jar.set_cookie('test_cookie', str(datetime.now()))
+
+    return {
+        'request': request,
+        'session': session,
+    }
+```
+    '''
+
+    # this has the same signature as django HTTPResponse.set_cookie() function
+    cookie_jar.set_cookie('test_cookie', str(datetime.now()))
+
+    return {
+        'request': repr(request),
+        'session': session,
+    }
+
+
+@api.post(
+    '/other_argument_data_sources',
+    tags=['1. Basic HTTP requests'],
+    summary='Other argument data sources',
+)
+def other_argument_data_sources(
+    test_cookie=Cookie(), content_type=Header(), http_referer=Header()
+):
+    '''
+You can also get your request arguments from other data sources.
+
+Like: `Header()`, `Cookie()`
+
+* *Note: While accessing via `Header()`, all variable name will converted to uppercase as http header key name*
+* *e.g.: `content_type` -> `CONTENT_TYPE`
+
+```python
+@api.post(
+    '/other_argument_data_sources',
+)
+def other_argument_data_sources(
+    test_cookie=Cookie(), content_type=Header(), http_referer=Header()
+):
+    return {
+        'test_cookie': test_cookie,
+        'content_type': content_type,
+        'referrer': http_referer,
+    }
+```
+    '''
+    return {
+        'test_cookie': test_cookie,
+        'content_type': content_type,
+        'referrer': http_referer,
+    }
 
