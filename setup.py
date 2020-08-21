@@ -10,7 +10,7 @@ with open('README.md') as f:
 
 setuptools.setup(
     name='django-openapi',
-    version='0.1.1.7',
+    version='0.1.1.8',
     author='toki kanno',
     author_email='toki.kanno@gmail.com',
     description='A minimal FastAPI implementation in python2 + Django without pydantic',
@@ -30,4 +30,5 @@ setuptools.setup(
     ],
     python_requires='>=2.7',
     setup_requires=['wheel'],
+    install_requires=['django', 'six'],
 )
