@@ -98,7 +98,7 @@ def hello_via_json_body(payload=Body(HelloPayload)):
 
 * Reload agagin, the auto document page now should have 4 APIs on it.
 
-![image](https://raw.githubusercontent.com/tokikanno/django-openapi/blob/master/docs/images/hello_app.png)
+![image](https://raw.githubusercontent.com/tokikanno/django-openapi/master/docs/images/hello_app.png)
 
 Browse to the [demo folder](https://github.com/tokikanno/django-openapi/tree/master/demo) for more advanced samples.
 
