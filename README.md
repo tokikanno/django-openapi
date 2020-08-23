@@ -37,7 +37,7 @@ If the button doesn't show up, you clould also use below link directly
 
 After Gitpod launched, if you see a dialog like this, just hit the `Open Browser` button then you will get to the quick intro live demo server.
 
-![image](https://github.com/tokikanno/django-openapi/blob/master/docs/images/gitpod-dialog.png) 
+![image](https://raw.githubusercontent.com/tokikanno/django-openapi/master/docs/images/gitpod-dialog.png) 
 
 Use ctrl + p (or cmd + p if u're using MacOS X) and search for `intro.py` to see the source code of intro demo server.
 
@@ -98,7 +98,7 @@ def hello_via_json_body(payload=Body(HelloPayload)):
 
 * Reload agagin, the auto document page now should have 4 APIs on it.
 
-![image](https://github.com/tokikanno/django-openapi/blob/master/docs/images/hello_app.png)
+![image](https://raw.githubusercontent.com/tokikanno/django-openapi/blob/master/docs/images/hello_app.png)
 
 Browse to the [demo folder](https://github.com/tokikanno/django-openapi/tree/master/demo) for more advanced samples.
 
