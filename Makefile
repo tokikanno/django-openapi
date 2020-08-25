@@ -10,7 +10,7 @@ demo:
 	django-admin runserver --pythonpath=. --settings=demo.app
 
 intro:
-	django-admin runserver --pythonpath=. --settings=demo.intro 9527
+	django-admin runserver --pythonpath=. --settings=demo.intro
 
 test-intro:
 	django-admin test --pythonpath=. --settings=demo.intro tests.test_intro
