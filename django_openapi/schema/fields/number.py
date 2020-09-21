@@ -110,5 +110,7 @@ class NumberField(BaseSchemaElement):
             schema_d['exclusiveMaximum'] = self.lt
         if self.lte is not None:
             schema_d['maximum'] = self.lte
+        if self.enums:
+            schema_d['enum'] = list(self.enums)
 
         return schema_d
