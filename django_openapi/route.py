@@ -52,7 +52,7 @@ class ValidationErrorItem(BaseModel):
 
 
 class ValidationErrorResponse(BaseModel):
-    deatil = ArrayField(ObjectField(ValidationErrorItem))
+    detail = ArrayField(ObjectField(ValidationErrorItem))
 
 
 class PathNotFullfilled(Exception):
