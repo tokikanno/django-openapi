@@ -7,7 +7,7 @@ try:
     from inspect import getfullargspec as getargspec
 
     _USING_GET_FULL_ARG_SPEC = True
-except AttributeError:
+except (AttributeError, ImportError):
     from inspect import getargspec
 
     _USING_GET_FULL_ARG_SPEC = False
