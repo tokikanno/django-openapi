@@ -380,4 +380,3 @@ def other_argument_data_sources(
         'content_type': content_type,
         'referrer': http_referer,
     }
-
