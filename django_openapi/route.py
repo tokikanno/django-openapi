@@ -3,7 +3,16 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from inspect import getargspec
+try:
+    from inspect import getfullargspec as getargspec
+
+    _USING_GET_FULL_ARG_SPEC = True
+except AttributeError:
+    from inspect import getargspec
+
+    _USING_GET_FULL_ARG_SPEC = False
+
+# from inspect import getargspec
 from string import Formatter
 from collections import OrderedDict
 import re
