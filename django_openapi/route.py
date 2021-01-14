@@ -30,7 +30,7 @@ from .schema import (
     SchemaValidationError,
 )
 
-from collections import Counter, defaultdict, OrderedDict
+from collections import Counter
 
 import six
 
