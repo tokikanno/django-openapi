@@ -1,4 +1,3 @@
-from django_openapi.params import Cookie
 from os import path
 from hashlib import md5
 from datetime import datetime
