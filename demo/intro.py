@@ -268,7 +268,7 @@ class SampleResponse(BaseModel):
 )
 def post_request_with_json_schema_body(payload=Body(SamplePayload)):
     '''
-The JSON schema fields could also be used for describing JSON body format, 
+The JSON schema fields could also be used for describing JSON body format,
 all you need is declearing a class inherited from BaseModel class.
 
 ```python
@@ -286,8 +286,8 @@ class SampleResponse(BaseModel):
 
 
 @api.post(
-    '/post_request_with_json_schema_body', 
-    response_model=SampleResponse,  # you can also put json schema model here for declearing response model 
+    '/post_request_with_json_schema_body',
+    response_model=SampleResponse,  # you can also put json schema model here for declearing response model
 )
 def post_request_with_json_schema_body(
     payload=Body(SamplePayload),
