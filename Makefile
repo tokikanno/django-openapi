@@ -1,4 +1,4 @@
-.PHONY: clean build demo upload-test
+.PHONY: clean build demo upload-test py3 intro test-intro
 
 clean:
 	rm -rf build dist django_openapi.egg-info
@@ -11,6 +11,9 @@ demo:
 
 intro:
 	django-admin runserver --pythonpath=. --settings=demo.intro
+
+py3:
+	django-admin runserver --pythonpath=. --settings=demo.py3
 
 test-intro:
 	django-admin test --pythonpath=. --settings=demo.intro tests.test_intro
