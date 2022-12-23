@@ -1,3 +1,9 @@
+# Try django-mini-fastapi if you're using Python3 !!!
+
+After migrated all my company's legacy django projects into Python3, I've started a new project called [Django Mini FastAPI](https://github.com/tokikanno/django-mini-fastapi).
+This new lib works as a FastAPI adapter to django, and it reused about 95% codes from FastAPI, so it just works as same as FastAPI does (except it still not support async endpoints).
+So if you lik FastAPI, you have legacy django projects using Python3, just give it try!!!
+
 # django-openapi
 A minimal FastAPI implementation in Python2 + Django without pydantic
 
